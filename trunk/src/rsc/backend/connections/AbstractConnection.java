@@ -14,7 +14,7 @@ import org.jdom.Element;
 
 
 /**
- * Diese abstrakte Klasse fordert 2 Konstruktoren die statische Methode getName()
+ * Diese abstrakte Klasse fordert 2 Konstruktoren und die statische Methode getName()
  * fuer den Baum
  * @author  marcel richter
  */

@@ -9,6 +9,11 @@ import javax.swing.JOptionPane;
 import rsc.backend.connections.*;
 
 /**
+ * mit diesem panel wird die ssh-verbindung konfiguriert
+ * es laesst den nutzer host, port, benutzername und passwort eingeben 
+ * 
+ * todo: die rsa finger-prints sollten unter advanced als default-accept definiert 
+ * werden koennen 
  * 
  * @author marcel richter
  */
@@ -16,7 +21,9 @@ public class SSHConnectionConfigurator extends javax.swing.JPanel implements Con
 
     SSHConnection connection;
 
-    /** Creates new form SSHConnectionConfigurator */
+    /** 
+     * Creates new form SSHConnectionConfigurator 
+     */
     public SSHConnectionConfigurator(SSHConnection connection) {
         this.connection = connection;
         connection.addConnectionListener(this);

@@ -47,6 +47,16 @@ import rsc.frontend.MainFrame;
  * Diese Klasse implementiert das zentrale Programmobjekt als Singleton so das
  * jedes Objekt oder jede Klasse es erreichen kann. Seine Hauptaufgaben liegen
  * bei der Verwaltung der Hosts und dem Anbieten Programmweiter Funktionen.
+ * 
+ * Modul, Plugin und Connection Entwickler seien auf die entsprechenden Interfaces
+ * im Backend verwiesen.
+ * - backend/modules/Module
+ * - backend/connections/Connection
+ * - backend/plugins/Plugin 
+ * 
+ * Es ist nicht noetig diese Klasse zur Entwicklung anderer
+ * Programmteile naeher zu verstehen.
+ * 
  * @author  marcel richter
  */
 public class RSC extends DefaultMutableTreeNode {
@@ -68,7 +78,11 @@ public class RSC extends DefaultMutableTreeNode {
     private static RSC instance;
     private static boolean runAsApplet;
 
-    /** Creates a new instance of Main */
+    /** 
+     * erzeugt eine neue instanz vom RSC
+     * der konstruktor ist private da es sich um ein interface handelt
+     * 
+     */
     private RSC() {
         activePlugins = new Vector<Plugin>();
         hosts = new Vector<HostImpl>();
@@ -95,7 +109,8 @@ public class RSC extends DefaultMutableTreeNode {
     }
 
     /**
-     * Zugang zum Singleton
+     * RSC ist eine Singleton implementierung
+     * diese Methode bietet Zugang zur Instanz
      * @return Instanz des RSC-Objekts
      */
     public static RSC getInstance() {
@@ -109,7 +124,7 @@ public class RSC extends DefaultMutableTreeNode {
         runAsApplet = applet;
     }
 
-    public static boolean isRunAsApplet() {
+    public static boolean isRunningAsApplet() {
         return runAsApplet;
     }
 
@@ -222,6 +237,11 @@ public class RSC extends DefaultMutableTreeNode {
         return hosts;
     }
 
+    /**
+     * gibt die plugins die vom anwender geladen wurden zurueck
+     * 
+     * @return aktive plugins
+     */
     public Vector<Plugin> getActivePlugins() {
         return activePlugins;
     }
@@ -286,6 +306,13 @@ public class RSC extends DefaultMutableTreeNode {
         }
     }
 
+    /**
+     * laed ein plugin das vom benutzer benoetigt wird in dier anwendung
+     * 
+     * aufruf nur vom HostPanel aus
+     * 
+     * @param plugin zu ladenes Plugin
+     */
     public void addPlugin(Plugin plugin) {
         add(plugin);
         activePlugins.add(plugin);
@@ -297,6 +324,13 @@ public class RSC extends DefaultMutableTreeNode {
         }
     }
 
+    /**
+     * entfernt ein plugin wieder aus dem baum
+     * 
+     * sollte nur vom HostPanel aufgerufen werden
+     * 
+     * @param plugin zu entfernendes Plugin
+     */
     public void removePlugin(Plugin plugin) {
         Object[] objs = new Object[1];
         objs[0] = plugin;
@@ -318,6 +352,28 @@ public class RSC extends DefaultMutableTreeNode {
         return frontend;
     }
 
+    /**
+     * methode zum dynamischen nachladen von plugins, modulen und connections
+     * dabei wird der libPath (~/.rsc/extensions/) durchsucht
+     * 
+     * jedes dabei gefundene jar wird dann auf seine schnittstelle untersucht
+     * und wenn es sich um eine connection/plugin/module handelt nachgeladen
+     * 
+     * im moment wird die methode nur beim programmstart aufgerufen
+     * es waere auch moeglich sie spaeter erneut aufzurufen
+     * 
+     * bei einem externen Modul wird im Jar Packet folgende Struktur erwartet
+     * EXTENSION-NAME.jar
+     *   rsc.EXTENSION-NAME.EXTENSION-NAME.class
+     * 
+     * die zentrale extension-klasse muss also genauso heissen wie das jar-packet
+     * weiterhin muss diese klasse in einem gleichnamigen packet liegen
+     * damit sollten namenskonflikte ausgeschlossen werden
+     * 
+     * todo: die packetrestriktion ist in ordnung nur der primaere klassen-name 
+     * koennte auch im manifest definiert werden / moeglicherweise liesse sich
+     * aber dort auch der packetname und die art der extension spezifizieren
+     */
     private void collector() {
         File f = new File(libPath);
         Class<AbstractPlugin> plug;
@@ -427,14 +483,60 @@ public class RSC extends DefaultMutableTreeNode {
         }
     }
 
+    /**
+     * schreibt eine meldung in das log des programms
+     * die methode ist statisch implementiert um den zugriff zu vereinfachen
+     * 
+     * plugin/modul und connection entwickler sollten eigene statische log 
+     * methoden schreiben. in diese log gehoeren nur nachrichten aus den zentralen
+     * programmteilen
+     * 
+     * moeglicherweise wird in zukunft das commons logging-framework integriert
+     * mit dem dann alle logs zusammengefasst werden
+     * 
+     * 
+     * @param level wichtigkeit der nachricht
+     * @param msg nachricht
+     */
     public static void log(Level level, String msg) {
         Logger.getLogger(RSC.class.getName()).log(level, msg);
     }
 
+    /**
+     * schreibt eine fehler-meldung in das log des programms
+     * die methode ist statisch implementiert um den zugriff zu vereinfachen
+     * 
+     * plugin/modul und connection entwickler sollten eigene statische log 
+     * methoden schreiben. in diese log gehoeren nur nachrichten aus den zentralen
+     * programmteilen
+     * 
+     * moeglicherweise wird in zukunft das commons logging-framework integriert
+     * mit dem dann alle logs zusammengefasst werden
+     * 
+     * 
+     * @param level wichtigkeit der nachricht
+     * @param ex fehler der gepostet werden soll
+     */
     public static void log(Level level, Throwable ex) {
         Logger.getLogger(RSC.class.getName()).log(level, null, ex);
     }
 
+    /**
+     * schreibt eine fehler-meldung in das log des programms
+     * die methode ist statisch implementiert um den zugriff zu vereinfachen
+     * 
+     * plugin/modul und connection entwickler sollten eigene statische log 
+     * methoden schreiben. in diese log gehoeren nur nachrichten aus den zentralen
+     * programmteilen
+     * 
+     * moeglicherweise wird in zukunft das commons logging-framework integriert
+     * mit dem dann alle logs zusammengefasst werden
+     * 
+     * 
+     * @param level wichtigkeit der nachricht
+     * @param msg ergenzende nachricht
+     * @param ex fehler der gepostet werden soll
+     */
     public static void log(Level level, String msg, Throwable ex) {
         Logger.getLogger(RSC.class.getName()).log(level, msg, ex);
     }
@@ -468,7 +570,7 @@ public class RSC extends DefaultMutableTreeNode {
         }*/
         try {
             Snortconf sc = SnortFactoryParser.createInstance(new FileInputStream("/etc/snort/snort.conf"));
-            //System.out.println(sc.toString());
+        //System.out.println(sc.toString());
         } catch (Exception ex) {
             Logger.getLogger(RSC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -514,6 +616,12 @@ public class RSC extends DefaultMutableTreeNode {
         return modules;
     }
 
+    /**
+     * gibt alle verfuegbaren plugins zurueck 
+     * sowohl die statischen als auch die dynamisch nachgeladenen
+     * 
+     * @return installierte plugins (nicht zwingend auch aktiviert)
+     */
     public Vector<PluginContainer> getPlugins() {
         return plugins;
     }

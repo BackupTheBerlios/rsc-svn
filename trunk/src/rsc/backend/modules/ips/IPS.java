@@ -37,6 +37,13 @@ import rsc.backend.modules.ips.frontend.bak.IPSConfigurator;
 import rsc.frontend.TreeElement;
 
 /**
+ * dieses modul konfiguriert snort
+ * dafuer wird die konfigurationsdatei "snort.conf" geparst und alle elemente in
+ * einer gui dargestellt. die konfiguration (inklusive aller rule-files) laesst 
+ * sich veraendern und speichern. weiterhin ist auch ein export implementiert 
+ * mit dem sich die konfiguration in einer xml-datei ablegen und transportieren laesst
+ * darueber wird auch das verteilen der snort-konfiguration auf verschiedene rechner
+ * realisiert
  * 
  * @author marcel richter
  */
@@ -133,15 +140,6 @@ public class IPS extends DefaultModule {
         } catch (Exception ex) {
             Logger.getLogger(IPS.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void importConfiguration(String conf) {
-        //snortConf="";
-        //ruleFiles="";
-    }
-    
-    public String exportConfiguration() {
-        return "";
     }
     
     private void initIcons() {

@@ -14,6 +14,9 @@ import rsc.frontend.ContentPanelProvider;
 
 /**
  * Schnittstelle fuer interne und externe Module
+ * 
+ * cave! - es muss AbstractModule erweitert werden um ein Modul zu implementieren
+ * 
  * @author  marcel richter
  */
 public interface Module extends ContentPanelProvider, Exportable, ConnectionListener {
@@ -34,8 +37,5 @@ public interface Module extends ContentPanelProvider, Exportable, ConnectionList
      * false - sonst
      */
     boolean isUseable(Connection c);
-
-    void importConfiguration(String conf);
     
-    String exportConfiguration();
 }

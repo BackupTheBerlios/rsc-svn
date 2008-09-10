@@ -11,17 +11,17 @@ import rsc.backend.modules.ips.backend.Snortconf;
 
 /**
  *
- * @author  wariin
+ * @author  marcel richter
  */
-public class Configurator extends javax.swing.JPanel {
+public class ConfiguratorPanel extends javax.swing.JPanel {
     private IPS ips;
     
     /** Creates new form Configurator */
-    public Configurator(IPS ips) {
+    public ConfiguratorPanel(IPS ips) {
         this.ips=ips;
-        ips.getConf().getConfs(Include.class);
+        //ips.getConf().getConfs(IncludePanel.class);
         initComponents();
-        tp_configurator.add(new Include(ips));
+        tp_configurator.add(new IncludePanel(ips));
     }
     
     public void refresh() {

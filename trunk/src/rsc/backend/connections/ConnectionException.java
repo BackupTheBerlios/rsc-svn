@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package rsc.backend.connections;
 
 /**
  *
- * @author wariin
+ * @author marcel richter
  */
 public class ConnectionException extends Exception {
 

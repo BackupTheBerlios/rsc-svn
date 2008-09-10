@@ -8,12 +8,12 @@ package rsc.backend.modules.ips.frontend;
 
 /**
  *
- * @author  wariin
+ * @author  marcel richter
  */
-public class Config extends javax.swing.JPanel {
+public class ConfigPanel extends javax.swing.JPanel {
     
     /** Creates new form Config */
-    public Config() {
+    public ConfigPanel() {
         initComponents();
     }
     

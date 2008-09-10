@@ -6,6 +6,7 @@
     <description>Builds, tests, and runs the project rsc.</description>
     <import file="nbproject/build-impl.xml"/>
     
+    <!--it hurt's-->
     <target name="-pre-compile">
         <exec executable="java">
             <arg value="-classpath"/>
@@ -14,6 +15,7 @@
             <arg value="${src.dir}/rsc/backend/modules/ips/backend/parser/SnortFactory.g"/>
         </exec>
     </target>
+    
     <!--antlr target="${src.dir}/rsc/backend/modules/ips/backend/parser/SnortFactory.g">
         <classpath>
             <pathelement location="lib/antlr.jar"/>
