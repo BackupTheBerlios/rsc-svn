@@ -1,0 +1,24 @@
+
+#main task:
+persistierung lokal sowie remote
+
+modules tabelle MainPanel
+
+tree icons (zeige verbunden an anstatt aufgeklappt)
+sshConnection bei error steht das verwendete passwort in den logs (authenticator)
+nutzen der Jsch connection waere wuenschenswert
+
+
++logging
++tests
+
+#ips-configurator modul:
+angabe snort.conf
+rules files finden (dateidialog...) einstellen...
+implement copyConfiguration
+hilfe system
+
+fragen:
+sollen rules-files und snort.conf integriert oder lose behandelt werden??
+modul-konfigurationen sollen wohin gespeichert werden?? (/var/rsc/... oder /home/*/.rsc/modules....)
+

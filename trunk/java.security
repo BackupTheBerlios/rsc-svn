@@ -1,0 +1,7 @@
+grant {
+ permission java.security.AllPermission;
+ permission java.lang.RuntimePermission 
+        "createClassLoader";
+  permission java.lang.RuntimePermission 
+        "getClassLoader";
+};
