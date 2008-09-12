@@ -3,54 +3,93 @@
  *
  * Created on September 8, 2008, 7:31 PM
  */
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package rsc.backend.modules.ips.frontend;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-import rsc.backend.modules.Module;
 import rsc.backend.modules.ips.IPS;
 import rsc.backend.modules.ips.backend.Include;
 import rsc.backend.modules.ips.backend.Snortconf;
+import rsc.backend.modules.ips.backend.SnortconfChangeListener;
 import rsc.backend.modules.ips.backend.Snortelement;
 
 /**
  *
  * @author  marcel richter
  */
-public class IncludePanel extends javax.swing.JPanel {
+public class IncludePanel extends javax.swing.JPanel implements SnortconfChangeListener {
 
     private IPS ips;
     private Snortconf conf;
     //private DefaultTableModel dtm;
-    private SnortelementTableModel stm;
+    private IncludeTableModel itm;
     private JFileChooser jfs;
 
     /** Creates new form Include */
     public IncludePanel(IPS ips) {
         this.ips = ips;
         this.conf = ips.getConf();
+        ips.addChangeListener(this);
         initComponents();
-
+        SnortelementTableRenderer snortelementTableRenderer = new SnortelementTableRenderer();
+        t_includes.setDefaultRenderer(JButton.class, snortelementTableRenderer);
+        t_includes.setCellEditor(snortelementTableRenderer);
+        if(ips.getConf()!=null) {
+            refreshTable();
+        }
         //dtm = new DefaultTableModel(colNames, 0);
-        stm = new SnortelementTableModel(conf, Include.class);
-        t_includes.setModel(stm);
     }
-
-    public void refresh() {
-
-
+    
+    public void snortconfChanged() {
+        this.conf = ips.getConf();
+        //System.out.println("iii: "+(conf==null?"null":"not null"));
+        refreshTable();
+        System.out.println("uiiii "+conf.getElements(Include.class).size());
+        //t_includes.updateUI();
+        //t_includes.repaint();
+    }
+    
+    private void refreshTable() {
+        itm = new IncludeTableModel(conf, Include.class);
+        t_includes.setModel(itm);
+        t_includes.getColumnModel().getColumn(0).setMinWidth(30);
+        t_includes.getColumnModel().getColumn(0).setMaxWidth(30);
+        t_includes.getColumnModel().getColumn(0).setPreferredWidth(30);
     }
 
     /** This method is called from within the constructor to
@@ -66,6 +105,7 @@ public class IncludePanel extends javax.swing.JPanel {
         sp_includes = new javax.swing.JScrollPane();
         t_includes = new javax.swing.JTable();
         b_add = new javax.swing.JButton();
+        spacer = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -74,6 +114,7 @@ public class IncludePanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 5, 10, 0);
         add(l_includes, gridBagConstraints);
 
         t_includes.setModel(new javax.swing.table.DefaultTableModel(
@@ -94,6 +135,7 @@ public class IncludePanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
         add(sp_includes, gridBagConstraints);
 
         b_add.setText("add File...");
@@ -106,7 +148,15 @@ public class IncludePanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 20, 10);
         add(b_add, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 0.2;
+        add(spacer, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     private void b_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_addActionPerformed
         int ret = jfs.showOpenDialog(null);
@@ -122,18 +172,17 @@ public class IncludePanel extends javax.swing.JPanel {
     private javax.swing.JButton b_add;
     private javax.swing.JLabel l_includes;
     private javax.swing.JScrollPane sp_includes;
+    private javax.swing.JPanel spacer;
     private javax.swing.JTable t_includes;
     // End of variables declaration//GEN-END:variables
-    private class SnortelementRemoveButton extends JButton implements ActionListener, TableCellRenderer {
+    private class SnortelementRemoveButton extends JButton implements ActionListener/*, TableCellRenderer*/ {
 
         private Snortelement element;
         private Snortconf conf;
-        private SnortelementTableModel stm;
 
-        public SnortelementRemoveButton(Snortconf conf, SnortelementTableModel stm, Snortelement element) {
+        public SnortelementRemoveButton(Snortconf conf, Snortelement element) {
             this.element = element;
             this.conf = conf;
-            this.stm = stm;
             addActionListener(this);
             setIcon(new javax.swing.ImageIcon(getClass().getResource("/rsc/frontend/icon/minus_16.png")));
         }
@@ -145,35 +194,85 @@ public class IncludePanel extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
             System.out.println("remove Element");
             conf.remove(element);
-            stm.elementRemoved(element);
         }
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        /*public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             return this;
+        }*/
+    }
+    
+    private class SnortelementTableRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+        private JTextField text = new JTextField();
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if (value instanceof JButton) {
+                return ((JButton) value);
+            }
+            return text;
+        }
+
+        public Object getCellEditorValue() {
+            return null;
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            if (column == 0) {
+                return ((SnortelementRemoveButton) value);
+            }
+            return null;
         }
     }
 
-    private class SnortelementTableModel implements TableModel {
+    private class IncludeTableModel extends SnortelementTableModel {
 
-        private Snortconf conf;
-        private Class elementClass;
+        public IncludeTableModel(Snortconf conf, Class elementClass) {
+            super(conf, elementClass);
+        }
+
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            if (columnIndex == 1) {
+                return true;
+            }
+            return false;
+        }
+
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            if (columnIndex == 1) {
+                Include i = (Include) getElement(rowIndex);
+                i.setFile(aValue.toString());
+            //host.fireModulChangeEvent(m);
+            }
+        }
+
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (columnIndex == 1) {
+                return ((Include)getElement(rowIndex)).getFile();
+            }
+            return super.getValueAt(rowIndex, columnIndex);
+        }
+    }
+
+    /**
+     * todo: sollte vielleicht spaeter auch im host-panel eingesetzt werden
+     */
+    private abstract class SnortelementTableModel implements TableModel {
+
+        protected Snortconf conf;
+        protected Class elementClass;
         private Vector<TableModelListener> listeners;
-        private Vector<SnortelementRemoveButton> elements;
+        private Map<Snortelement, SnortelementRemoveButton> buttons;
 
         public SnortelementTableModel(Snortconf conf, Class elementClass) {
             this.conf = conf;
+            this.elementClass=elementClass;
             Snortelement e;
-            elements = new Vector<SnortelementRemoveButton>();
-            Iterator<Snortelement> it = conf.iterator(elementClass);
-            while (it.hasNext()) {
-                e = it.next();
-                //elements.add(new SnortelementRemoveButton(conf, e));
-            }
+            buttons = new HashMap<Snortelement, SnortelementRemoveButton>();
             listeners = new Vector<TableModelListener>();
         }
 
         public int getRowCount() {
-            return elements.size();
+            return conf.size(elementClass);
         }
 
         public int getColumnCount() {
@@ -203,33 +302,27 @@ public class IncludePanel extends javax.swing.JPanel {
         }
 
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if (columnIndex == 1) {
-                return false;
-            }
             return false;
         }
 
-        private Snortelement getElement(int row) {
-            return elements.get(row).getElement();
+        protected Snortelement getElement(int row) {
+            return conf.getElements(elementClass).get(row);
         }
 
-        private SnortelementRemoveButton getButton(int row) {
-            return null;
+        protected SnortelementRemoveButton getButton(int row) {
+            SnortelementRemoveButton ret;
+            Snortelement e = getElement(row);
+            if ((ret = buttons.get(e)) == null) {
+                return buttons.put(e, new SnortelementRemoveButton(conf, e));
+            }
+            return ret;
         }
 
         public Object getValueAt(int rowIndex, int columnIndex) {
-            if (columnIndex == 1) {
-                return getElement(rowIndex);
+            if (rowIndex == 0) {
+                return getButton(rowIndex);
             }
-            return getButton(rowIndex);
-        }
-
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        /*if (columnIndex == 1) {
-        Module m = ((Module) t_modules.getValueAt(rowIndex, columnIndex));
-        m.setName(aValue.toString());
-        host.fireModulChangeEvent(m);
-        }*/
+            return null;
         }
 
         public void addTableModelListener(TableModelListener l) {
@@ -251,7 +344,7 @@ public class IncludePanel extends javax.swing.JPanel {
         }
 
         public void elementRemoved(Object element) {
-            elements.remove(element);
+            buttons.remove(element);
             fireTableDataChanged();
         }
 

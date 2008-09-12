@@ -4,6 +4,26 @@
  * Created on November 1, 2006, 9:03 PM
  *
  */
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package rsc.backend;
 
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +51,7 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
 
     private Connection connection;
     private DefaultTreeModel dtm;
-    private Vector<Module> moduls;
+    private Vector<Module> modules;
     private Vector<CollectionListener> modulListener;
     private HostPanel panel;
     private String name;
@@ -41,17 +61,19 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
     public HostImpl(Connection c, DefaultTreeModel dtm) {
         setConnection(c);
         this.dtm = dtm;
-        moduls = new Vector<Module>();
+        modules = new Vector<Module>();
         modulListener = new Vector<CollectionListener>();
         panel = new HostPanel(this);
         name = "Host";
         initIcons();
     }
 
-    public HostImpl(Element e) {
-        String x = e.getAttributeValue("name");
+    public HostImpl(Element e, DefaultTreeModel dtm) {
+        String x = e.getAttributeValue("connection");
         for (ConnectionContainer cc : RSC.getInstance().getConnections()) {
-            if (cc.isInstance(getConnection())) {
+            //System.out.println("vgl: "+cc.getClassName()+" - "+x);
+            if(cc.getClassName().equals(x)) {
+                //System.out.println("uiii");
                 try {
                     connection = cc.newInstance(e);
                 } catch (IllegalArgumentException ex) {
@@ -69,6 +91,11 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
                 }
             }
         }
+        this.dtm = dtm;
+        modules = new Vector<Module>();
+        modulListener = new Vector<CollectionListener>();
+        panel = new HostPanel(this);
+        name = "Host";
         initIcons();
     }
 
@@ -83,11 +110,13 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
 
     public void export(Element e) {
         Element ee = new Element("host");
-        for (ConnectionContainer cc : RSC.getInstance().getConnections()) {
+        ee.setAttribute("connection", connection.getClass().getName());
+        /*for (ConnectionContainer cc : RSC.getInstance().getConnections()) {
             if (cc.isInstance(getConnection())) {
                 cc.export(ee);
             }
-        }
+        }*/
+        getConnection().export(ee);
         e.addContent(ee);
     }
 
@@ -105,7 +134,7 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
 
     public void addModul(Module modul) {
         add(modul);
-        moduls.add(modul);
+        modules.add(modul);
         int[] added = new int[1];
         added[0] = this.getIndex(modul);
         dtm.nodesWereInserted(this, added);
@@ -120,7 +149,7 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
         int[] removed = new int[1];
         removed[0] = this.getIndex(modul);
         remove(modul);
-        moduls.remove(modul);
+        modules.remove(modul);
         dtm.nodesWereRemoved(this, removed, objs);
         for (CollectionListener l : modulListener) {
             l.elementRemoved(modul);
@@ -142,10 +171,13 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
     }
 
     public Vector<Module> getModuls() {
-        return moduls;
+        return modules;
     }
 
     public void setConnection(Connection c) {
+        if(connection!=null) {
+            connection.removeConnectionListener(this);
+        }
         connection = c;
         connection.addConnectionListener(this);
     }

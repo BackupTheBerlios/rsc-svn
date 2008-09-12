@@ -2,6 +2,26 @@
  * MainPanel.java
  *
  * Created on February 2, 2007, 12:21 AM
+ * 
+ */
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 package rsc.frontend;
 
@@ -15,7 +35,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import rsc.RSC;
 import rsc.backend.HostImpl;
@@ -34,9 +53,9 @@ public class MainPanel extends javax.swing.JPanel implements TreeModelListener, 
     /** Creates new form MainPanel */
     public MainPanel() {
         initComponents();
-        dtm = new EditableDefaultTreeModel(RSC.getInstance());
+
+        dtm = RSC.getInstance().getDTM();
         dtm.addTreeModelListener(this);
-        RSC.getInstance().setDTM(dtm);
         tree.setCellRenderer(new TreeRenderer());
         tree.addTreeSelectionListener(this);
         tree.setModel(dtm);
@@ -48,18 +67,21 @@ public class MainPanel extends javax.swing.JPanel implements TreeModelListener, 
         }
 
 
-        //begin dummy
-        HostImpl h = new HostImpl(new SSHConnection("127.0.0.1", "mariin", "bla", 22), dtm);
-        h.setName("dummy1");
-        RSC.getInstance().addHost(h);
-        h = new HostImpl(new SSHConnection("192.168.0.10", "blob", "bloo", 22), dtm);
-        h.setName("dummy2");
-        RSC.getInstance().addHost(h);
+    //begin dummy
+        /*
+    HostImpl h = new HostImpl(new SSHConnection("127.0.0.1", "mariin", "bla", 22), dtm);
+    h.setName("dummy1");
+    RSC.getInstance().addHost(h);
+    h = new HostImpl(new SSHConnection("192.168.0.10", "blob", "bloo", 22), dtm);
+    h.setName("dummy2");
+    RSC.getInstance().addHost(h);
+     */
     //end dummy
     }
 
     public void updateTree() {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 tree.updateUI();
             }
@@ -244,11 +266,11 @@ public class MainPanel extends javax.swing.JPanel implements TreeModelListener, 
     }//GEN-LAST:event_b_addActionPerformed
 
     private void b_removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_removeActionPerformed
-        Object selected=tree.getSelectionPath().getLastPathComponent();
-        if(selected instanceof HostImpl) {
-            RSC.getInstance().removeHost((HostImpl)selected);
-        } else if(selected instanceof Plugin) {
-            RSC.getInstance().removePlugin((Plugin)selected);
+        Object selected = tree.getSelectionPath().getLastPathComponent();
+        if (selected instanceof HostImpl) {
+            RSC.getInstance().removeHost((HostImpl) selected);
+        } else if (selected instanceof Plugin) {
+            RSC.getInstance().removePlugin((Plugin) selected);
         }
     }//GEN-LAST:event_b_removeActionPerformed
 
@@ -281,19 +303,6 @@ public class MainPanel extends javax.swing.JPanel implements TreeModelListener, 
         }
     }
 
-    private class EditableDefaultTreeModel extends DefaultTreeModel {
-
-        public EditableDefaultTreeModel(TreeNode root) {
-            super(root);
-        }
-
-        public void valueForPathChanged(TreePath path, Object newValue) {
-            if (path.getLastPathComponent() instanceof TreeElement) {
-                ((TreeElement) path.getLastPathComponent()).setName(newValue.toString());
-            }
-        }
-    }
-    
     private class Add {
 
         private PluginContainer container;
@@ -328,8 +337,8 @@ public class MainPanel extends javax.swing.JPanel implements TreeModelListener, 
     }
 
     public void valueChanged(TreeSelectionEvent e) {
-        Object selected=tree.getSelectionPath().getLastPathComponent();
-        if(selected instanceof HostImpl || selected instanceof Plugin) {
+        Object selected = tree.getSelectionPath().getLastPathComponent();
+        if (selected instanceof HostImpl || selected instanceof Plugin) {
             b_remove.setEnabled(true);
         } else {
             b_remove.setEnabled(false);

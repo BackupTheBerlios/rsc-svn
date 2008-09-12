@@ -3,6 +3,26 @@
  *
  * Created on November 1, 2006, 3:41 PM
  */
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package rsc.frontend;
 
 import java.awt.Component;
@@ -326,7 +346,7 @@ public class HostPanel extends javax.swing.JPanel implements ConnectionListener 
     private javax.swing.JTable t_modules;
     // End of variables declaration//GEN-END:variables
 
-    private class ModuleRemoveButton extends JButton implements ActionListener, TableCellRenderer {
+    private class ModuleRemoveButton extends JButton implements ActionListener/*, TableCellRenderer*/ {
 
         private Module module;
 
@@ -341,9 +361,9 @@ public class HostPanel extends javax.swing.JPanel implements ConnectionListener 
             host.removeModul(module);
         }
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        /*public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             return this;
-        }
+        }*/
     }
 
     private class ModuleTableRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {

@@ -5,6 +5,25 @@
  *
  */
 
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package rsc.backend.modules.ips;
 
 import java.util.Vector;
@@ -19,20 +38,14 @@ import javax.swing.JPopupMenu;
 import javax.swing.tree.TreePath;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.PatternCompiler;
-import org.apache.oro.text.regex.Perl5Compiler;
 import org.jdom.Element;
-import rsc.CollectionListener;
 import rsc.backend.Host;
-import rsc.backend.HostImpl;
 import rsc.backend.connections.Connection;
 import rsc.backend.modules.DefaultModule;
-import rsc.backend.modules.ips.backend.IPSRule;
-import rsc.backend.modules.ips.backend.IPSSnort;
 import rsc.backend.modules.ips.backend.Snortconf;
+import rsc.backend.modules.ips.backend.SnortconfChangeListener;
 import rsc.backend.modules.ips.backend.parser.SnortFactoryParser;
+import rsc.backend.modules.ips.frontend.ConfiguratorPanel;
 import rsc.backend.modules.ips.frontend.bak.IPSConfigurator;
 import rsc.frontend.TreeElement;
 
@@ -48,16 +61,13 @@ import rsc.frontend.TreeElement;
  * @author marcel richter
  */
 public class IPS extends DefaultModule {
-    private IPSConfigurator configurator;
-    //private Vector<IPSRule> rules;
-    //private IPSSnort snort;
+    private ConfiguratorPanel configurator;
     private String name;
-    //private Vector<CollectionListener> ruleListener;
-    private static PatternCompiler pc;
+    //private static PatternCompiler pc;
     private Icon openIcon,closeIcon;
     private Snortconf conf;
     private String snortConf="/etc/snort/snort.conf";
-    private Vector<String> ruleFiles;
+    private Vector<SnortconfChangeListener> listeners;
     
     public boolean isConnected() {
         return host.getConnection().isConnected();
@@ -71,18 +81,11 @@ public class IPS extends DefaultModule {
         this.snortConf=snortConf;
     }
     
-    public void addRuleFile(String ruleFile) {
-        ruleFiles.add(ruleFile);
-    }
-    
-    public void removeRuleFile(String ruleFile) {
-        ruleFiles.remove(ruleFile);
-    }
-    
     /** Creates a new instance of IPS */
     public IPS(Host host) {
         super(host);
         name="IPS";
+        listeners=new Vector<SnortconfChangeListener>();
         //ruleListener=new Vector<CollectionListener>();
         //rules=new Vector<IPSRule>();
         //snort=new IPSSnort(this);
@@ -92,7 +95,7 @@ public class IPS extends DefaultModule {
         //added[0]=this.getIndex(snort);
         //dtm.nodesWereInserted(this,added);
         
-        configurator=new IPSConfigurator(this);
+        configurator=new ConfiguratorPanel(this);
         initIcons();
         if(host.getConnection().isConnected()) {
             connectionConnect();
@@ -102,6 +105,7 @@ public class IPS extends DefaultModule {
     public IPS(Host host, Element e) {
         super(host,e);
         name="IPS";
+        listeners=new Vector<SnortconfChangeListener>();
         //ruleListener=new Vector<CollectionListener>();
         //rules=new Vector<IPSRule>();
         //snort=new IPSSnort(this);
@@ -111,10 +115,29 @@ public class IPS extends DefaultModule {
         //added[0]=this.getIndex(snort);
         //dtm.nodesWereInserted(this,added);
         
-        //configurator=new IPSConfigurator(this);
+        configurator=new ConfiguratorPanel(this);
         initIcons();
         if(host.getConnection().isConnected()) {
             connectionConnect();
+        }
+    }
+    
+    public void export(Element e) {
+        Element ee=new Element("IPS");
+        e.addContent(e);
+    }
+    
+    public void addChangeListener(SnortconfChangeListener l) {
+        listeners.add(l);
+    }
+    
+    public void removeChangeListener(SnortconfChangeListener l) {
+        listeners.remove(l);
+    }
+    
+    private void fireChangeEvent() {
+        for(SnortconfChangeListener x:listeners) {
+            x.snortconfChanged();
         }
     }
     
@@ -133,6 +156,7 @@ public class IPS extends DefaultModule {
                 JOptionPane.showMessageDialog(null, "cant read snort.conf", "snort configuration error", JOptionPane.ERROR_MESSAGE);
             }
             conf=SnortFactoryParser.createInstance(fo.getContent().getInputStream());//new Snortconf(fo.getContent().getInputStream());
+            fireChangeEvent();
         } catch (ConfigurationException ex) {
             IPS.log(Level.SEVERE, "cant configure ips-configuration", ex);
         } catch (FileSystemException ex) {
@@ -150,13 +174,13 @@ public class IPS extends DefaultModule {
         return "IPS";
     }
     
-    static {
+    /*static {
         pc=new Perl5Compiler();
     }
     
     synchronized public static Pattern compilePattern(String pattern) throws MalformedPatternException {
         return pc.compile(pattern);
-    }
+    }*/
     
     public static void log(Level level, String msg) {
          Logger.getLogger(IPS.class.getName()).log(level,msg);

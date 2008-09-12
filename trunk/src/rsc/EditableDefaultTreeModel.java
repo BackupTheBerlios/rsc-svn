@@ -17,34 +17,26 @@
  *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package rsc.backend.modules.ips.backend;
+package rsc;
+
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import rsc.frontend.TreeElement;
 
 /**
  *
  * @author marcel richter
  */
-public class Config implements Command {
+public class EditableDefaultTreeModel extends DefaultTreeModel {
 
-    private String name,  options;
-
-    public Config(String name) {
-        this.name = name;
+    public EditableDefaultTreeModel(TreeNode root) {
+        super(root);
     }
 
-    public Config(String name, String options) {
-        this.name = name;
-        this.options = options;
-    }
-
-    public String toString() {
-        if (options != null) {
-            return "config " + name + " :" + options;
-        } else {
-            return "config " + name;
+    public void valueForPathChanged(TreePath path, Object newValue) {
+        if (path.getLastPathComponent() instanceof TreeElement) {
+            ((TreeElement) path.getLastPathComponent()).setName(newValue.toString());
         }
-    }
-    
-    public String getName() {
-        return "Config";
     }
 }

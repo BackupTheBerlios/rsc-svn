@@ -1,7 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package rsc.backend.modules.ips.backend;
 
 import java.util.AbstractCollection;
@@ -17,27 +32,51 @@ import java.util.Vector;
 public class Snortconf extends AbstractCollection<Snortelement> {
 
     private Vector<Snortelement> elements;
-    private Map<Class,Integer> count;
+    private Map<Class, Vector<Snortelement>> subElements;
 
     public Snortconf() {
         elements = new Vector<Snortelement>();
-        count=new HashMap<Class,Integer>();
+        subElements = new HashMap<Class, Vector<Snortelement>>();
     }
-    
+
     public boolean add(Snortelement element) {
-        count.put(element.getClass(), size(element.getClass())+1);
-        return elements.add(element);
+        if (getElements(element.getClass()).add(element)) {
+            if (elements.add(element)) {
+                return true;
+            } else {
+                if (getElements(element.getClass()).remove(element)) {
+                    return false;
+                } else {
+                    return false;
+                    //throw new Exception("inconsistent Snortelement vectors (fatal-error)");
+                }
+            }
+        } else {
+            return false;
+        }
     }
-    
+
     public boolean remove(Snortelement element) {
-        count.put(element.getClass(), size(element.getClass())-1);
-        return elements.remove(element);
+        if (getElements(element.getClass()).remove(element)) {
+            if (elements.remove(element)) {
+                return true;
+            } else {
+                if (getElements(element.getClass()).add(element)) {
+                    return false;
+                } else {
+                    return false;
+                    //throw new Exception("inconsistent Snortelement vectors (fatal-error)");
+                }
+            }
+        } else {
+            return false;
+        }
     }
-    
+
     private Snortelement lastElement() {
         return elements.lastElement();
     }
-    
+
     public AddressVar getAddressVar(String name) {
         for (Snortelement x : this) {
             if (x instanceof AddressVar) {
@@ -71,26 +110,23 @@ public class Snortconf extends AbstractCollection<Snortelement> {
             add(new Comment());
         }
     }
-    
+
     @Override
     public int size() {
         return elements.size();
     }
 
     public int size(Class t) {
-        Integer ret=count.get(t);
-        return ret==null?0:ret;
+        return getElements(t).size();
     }
 
-    /*public Vector<Snortelement> getConfs(Class t) {
-        Vector<Snortelement> ret = new Vector<Snortelement>();
-        for (Snortelement x : this) {
-            if (t.isInstance(x)) {
-                ret.add((Include) x);
-            }
+    public Vector<Snortelement> getElements(Class t) {
+        Vector<Snortelement> s = subElements.get(t);
+        if (s == null) {
+            subElements.put(t, s = new Vector<Snortelement>());
         }
-        return ret;
-    }*/
+        return s;
+    }
 
     public String toString() {
         String ret = "";
@@ -99,38 +135,35 @@ public class Snortconf extends AbstractCollection<Snortelement> {
         }
         return ret;
     }
-    
-    public Iterator iterator(Class t) {
-        return new ConfIterator(t);
-    }
 
     @Override
     public Iterator<Snortelement> iterator() {
         return elements.iterator();
     }
-    
-    private class ConfIterator implements Iterator<Snortelement> {
+
+    /*private class ConfIterator implements Iterator<Snortelement> {
+
         private Class t;
-        int position,globalPosition;
-        
+        int position, globalPosition;
+
         public ConfIterator(Class t) {
-            this.t=t;
-            position=0;
-            globalPosition=0;
+            this.t = t;
+            position = 0;
+            globalPosition = 0;
         }
 
         public boolean hasNext() {
-            if(position<size(t)) {
+            if (position < size(t)) {
                 return true;
             }
             return false;
         }
 
         public Snortelement next() {
-            Snortelement ret=null;
-            for(;globalPosition<elements.size() && ret==null;globalPosition++) {
-                if(t.isInstance(elements.get(globalPosition))) {
-                    ret=elements.get(globalPosition);
+            Snortelement ret = null;
+            for (; globalPosition < elements.size() && ret == null; globalPosition++) {
+                if (t.isInstance(elements.get(globalPosition))) {
+                    ret = elements.get(globalPosition);
                 }
             }
             position++;
@@ -140,5 +173,5 @@ public class Snortconf extends AbstractCollection<Snortelement> {
         public void remove() {
             elements.remove(globalPosition);
         }
-    }
+    }*/
 }

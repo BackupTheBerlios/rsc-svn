@@ -4,11 +4,30 @@
  * Created on November 1, 2006, 3:33 PM
  *
  */
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package rsc;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,8 +55,6 @@ import rsc.backend.connections.AbstractConnection;
 import rsc.backend.connections.ConnectionContainer;
 import rsc.backend.modules.AbstractModule;
 import rsc.backend.modules.ModuleContainer;
-import rsc.backend.modules.ips.backend.Snortconf;
-import rsc.backend.modules.ips.backend.parser.SnortFactoryParser;
 import rsc.backend.plugins.AbstractPlugin;
 import rsc.backend.plugins.Plugin;
 import rsc.backend.plugins.PluginContainer;
@@ -90,11 +107,12 @@ public class RSC extends DefaultMutableTreeNode {
         modules = new Vector<ModuleContainer>();
         connections = new Vector<ConnectionContainer>();
         rootListener = new Vector<CollectionListener>();
+        dtm = new EditableDefaultTreeModel(this);
         if (!runAsApplet) {
             //hostDir = System.getProperty("user.dir") + System.getProperty("file.separator") + ".rsc";
             hostDir = System.getProperty("user.home") + System.getProperty("file.separator") + ".rsc";
             configFile = hostDir + System.getProperty("file.separator") + "rsc.conf";
-            libPath = /*System.getProperty("user.dir")*/ hostDir + System.getProperty("file.separator") + "extensions";
+            libPath = hostDir + System.getProperty("file.separator") + "extensions";
         } else {
             hostDir = "";
             configFile = "";
@@ -103,8 +121,8 @@ public class RSC extends DefaultMutableTreeNode {
 
         try {
             collector();
-        } catch (Exception e) {
-            System.err.println("error while loading plugins: " + e.getMessage());
+        } catch (Exception ex) {
+            log(Level.SEVERE, "error while loading plugins: " + libPath, ex);
         }
     }
 
@@ -116,6 +134,15 @@ public class RSC extends DefaultMutableTreeNode {
     public static RSC getInstance() {
         if (instance == null) {
             instance = new RSC();
+            if (!runAsApplet) {
+                try {
+                    instance.load();
+                } catch (ParseException ex) {
+                    log(Level.WARNING, "cant parse configuration file " + instance.configFile, ex);
+                } catch (IOException ex) {
+                    log(Level.WARNING, "cant read configuration file " + instance.configFile, ex);
+                }
+            }
         }
         return instance;
     }
@@ -129,14 +156,19 @@ public class RSC extends DefaultMutableTreeNode {
     }
 
     /**
-     * diese Methode wird vom MainFrame nachdem der Baum instanziert wurd aufgerufen.
+     * diese Methode wird vom MainFrame nachdem der Baum instanziert wurde aufgerufen.
      *
      * also eigentlich ziemilch daemlich und hier muss wohl ein getDTM draus werden
      * und der MainFrame holt sich dieses ab
      * @param dtm TreeModel das RSC aktualisiert wenn sich seine Hosts aendern
      */
+    @Deprecated
     public void setDTM(DefaultTreeModel dtm) {
         this.dtm = dtm;
+    }
+    
+    public DefaultTreeModel getDTM() {
+        return dtm;
     }
 
     /**
@@ -197,7 +229,8 @@ public class RSC extends DefaultMutableTreeNode {
                 Document doc = builder.build(f);
                 Element root = doc.getRootElement();
                 for (Element e : (List<Element>) root.getChildren("host")) {
-                    hosts.add(new HostImpl(e));
+                    //hosts.add();
+                    addHost(new HostImpl(e,dtm));
                 }
                 for (Element e : (List<Element>) root.getChildren("plugin")) {
                     for (PluginContainer x : plugins) {
@@ -568,12 +601,12 @@ public class RSC extends DefaultMutableTreeNode {
         log(Level.SEVERE, null, ex);
         }
         }*/
-        try {
-            Snortconf sc = SnortFactoryParser.createInstance(new FileInputStream("/etc/snort/snort.conf"));
+        /*try {
+        Snortconf sc = SnortFactoryParser.createInstance(new FileInputStream("/etc/snort/snort.conf"));
         //System.out.println(sc.toString());
         } catch (Exception ex) {
-            Logger.getLogger(RSC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Logger.getLogger(RSC.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
 
         try {
             //UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");

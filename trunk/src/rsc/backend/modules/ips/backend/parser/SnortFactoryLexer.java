@@ -1,4 +1,23 @@
-// $ANTLR 3.1 src/rsc/backend/modules/ips/backend/parser/SnortFactory.g 2008-09-10 18:37:33
+// $ANTLR 3.1 src/rsc/backend/modules/ips/backend/parser/SnortFactory.g 2008-09-12 10:57:36
+
+/*
+ * Copyright 2008 Marcel Richter
+ * 
+ * This file is part of RSC (Remote Service Configurator).
+ *
+ *  RSC is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  RSC is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
    package rsc.backend.modules.ips.backend.parser;
 
@@ -60,8 +79,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:7:7: ( '->' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:7:9: '->'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:26:7: ( '->' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:26:9: '->'
             {
             match("->"); 
 
@@ -81,8 +100,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = SUB;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:153:5: ( SLASH NUMBER )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:153:7: SLASH NUMBER
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:210:5: ( SLASH NUMBER )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:210:7: SLASH NUMBER
             {
             mSLASH(); 
             mNUMBER(); 
@@ -102,8 +121,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = ADDRESS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:155:9: ( NUMBER DOT NUMBER DOT NUMBER DOT NUMBER ( SUB )? )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:155:11: NUMBER DOT NUMBER DOT NUMBER DOT NUMBER ( SUB )?
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:9: ( NUMBER DOT NUMBER DOT NUMBER DOT NUMBER ( SUB )? )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:11: NUMBER DOT NUMBER DOT NUMBER DOT NUMBER ( SUB )?
             {
             mNUMBER(); 
             mDOT(); 
@@ -112,7 +131,7 @@ public class SnortFactoryLexer extends Lexer {
             mNUMBER(); 
             mDOT(); 
             mNUMBER(); 
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:155:51: ( SUB )?
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:51: ( SUB )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -121,7 +140,7 @@ public class SnortFactoryLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:155:52: SUB
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:52: SUB
                     {
                     mSUB(); 
 
@@ -146,8 +165,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = NEWLINE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:192:9: ( '\\n' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:192:11: '\\n'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:249:9: ( '\\n' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:249:11: '\\n'
             {
             match('\n'); 
 
@@ -166,8 +185,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = VAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:194:5: ( 'var' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:194:7: 'var'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:5: ( 'var' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:7: 'var'
             {
             match("var"); 
 
@@ -187,8 +206,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = IPVAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:196:7: ( 'ipvar' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:196:9: 'ipvar'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:253:7: ( 'ipvar' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:253:9: 'ipvar'
             {
             match("ipvar"); 
 
@@ -208,8 +227,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = PORTVAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:198:9: ( 'portvar' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:198:11: 'portvar'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:255:9: ( 'portvar' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:255:11: 'portvar'
             {
             match("portvar"); 
 
@@ -229,8 +248,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = INCLUDE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:200:9: ( 'include' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:200:11: 'include'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:257:9: ( 'include' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:257:11: 'include'
             {
             match("include"); 
 
@@ -250,8 +269,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = OUTPUT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:202:8: ( 'output' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:202:10: 'output'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:259:8: ( 'output' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:259:10: 'output'
             {
             match("output"); 
 
@@ -271,8 +290,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = CONFIG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:204:8: ( 'config' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:204:10: 'config'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:261:8: ( 'config' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:261:10: 'config'
             {
             match("config"); 
 
@@ -292,8 +311,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = PREPRO;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:206:8: ( 'preprocessor' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:206:10: 'preprocessor'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:263:8: ( 'preprocessor' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:263:10: 'preprocessor'
             {
             match("preprocessor"); 
 
@@ -313,12 +332,12 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = RULES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:7: ( 'alert' | 'log' | 'pass' | 'activate' | 'dynamic' | 'drop' | 'reject' | 'sdrop' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:7: ( 'alert' | 'log' | 'pass' | 'activate' | 'dynamic' | 'drop' | 'reject' | 'sdrop' )
             int alt2=8;
             alt2 = dfa2.predict(input);
             switch (alt2) {
                 case 1 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:9: 'alert'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:9: 'alert'
                     {
                     match("alert"); 
 
@@ -326,7 +345,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:19: 'log'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:19: 'log'
                     {
                     match("log"); 
 
@@ -334,7 +353,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:27: 'pass'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:27: 'pass'
                     {
                     match("pass"); 
 
@@ -342,7 +361,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:36: 'activate'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:36: 'activate'
                     {
                     match("activate"); 
 
@@ -350,7 +369,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:49: 'dynamic'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:49: 'dynamic'
                     {
                     match("dynamic"); 
 
@@ -358,7 +377,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:61: 'drop'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:61: 'drop'
                     {
                     match("drop"); 
 
@@ -366,7 +385,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:70: 'reject'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:70: 'reject'
                     {
                     match("reject"); 
 
@@ -374,7 +393,7 @@ public class SnortFactoryLexer extends Lexer {
                     }
                     break;
                 case 8 :
-                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:208:81: 'sdrop'
+                    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:265:81: 'sdrop'
                     {
                     match("sdrop"); 
 
@@ -396,7 +415,7 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = SYMBOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:210:8: ( '<' | '>' | '{' | '}' | '*' | '&' | '%' | '$' | '@' | '~' | '`' | '\\'' | '\\\"' | '^' | '=' | '+' | '-' | ';' | '_' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:267:8: ( '<' | '>' | '{' | '}' | '*' | '&' | '%' | '$' | '@' | '~' | '`' | '\\'' | '\\\"' | '^' | '=' | '+' | '-' | ';' | '_' )
             // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:
             {
             if ( input.LA(1)=='\"'||(input.LA(1)>='$' && input.LA(1)<='\'')||(input.LA(1)>='*' && input.LA(1)<='+')||input.LA(1)=='-'||(input.LA(1)>=';' && input.LA(1)<='>')||input.LA(1)=='@'||(input.LA(1)>='^' && input.LA(1)<='`')||input.LA(1)=='{'||(input.LA(1)>='}' && input.LA(1)<='~') ) {
@@ -424,8 +443,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:9: ( '#' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:212:11: '#'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:269:9: ( '#' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:269:11: '#'
             {
             match('#'); 
 
@@ -444,8 +463,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = COLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:214:7: ( ':' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:214:9: ':'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:271:7: ( ':' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:271:9: ':'
             {
             match(':'); 
 
@@ -464,8 +483,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = SLASH;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:216:7: ( '/' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:216:9: '/'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:273:7: ( '/' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:273:9: '/'
             {
             match('/'); 
 
@@ -484,8 +503,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = DIGIT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:219:2: ( '0' .. '9' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:219:4: '0' .. '9'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:276:2: ( '0' .. '9' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:276:4: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -504,8 +523,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = NEG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:221:5: ( '!' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:221:7: '!'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:278:5: ( '!' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:278:7: '!'
             {
             match('!'); 
 
@@ -524,8 +543,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = SLB;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:223:5: ( '[' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:223:7: '['
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:280:5: ( '[' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:280:7: '['
             {
             match('['); 
 
@@ -544,8 +563,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = SRB;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:225:5: ( ']' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:225:7: ']'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:282:5: ( ']' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:282:7: ']'
             {
             match(']'); 
 
@@ -564,8 +583,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = LB;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:227:4: ( '(' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:227:6: '('
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:284:4: ( '(' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:284:6: '('
             {
             match('('); 
 
@@ -584,8 +603,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = RB;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:229:4: ( ')' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:229:6: ')'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:286:4: ( ')' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:286:6: ')'
             {
             match(')'); 
 
@@ -604,8 +623,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = DOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:231:5: ( '.' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:231:7: '.'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:288:5: ( '.' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:288:7: '.'
             {
             match('.'); 
 
@@ -624,8 +643,8 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = COMMA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:233:7: ( ',' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:233:9: ','
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:290:7: ( ',' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:290:9: ','
             {
             match(','); 
 
@@ -644,7 +663,7 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = LETTER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:236:2: ( LOWER | UPPER )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:293:2: ( LOWER | UPPER )
             // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -670,8 +689,8 @@ public class SnortFactoryLexer extends Lexer {
     // $ANTLR start "LOWER"
     public final void mLOWER() throws RecognitionException {
         try {
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:239:2: ( 'a' .. 'z' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:239:4: 'a' .. 'z'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:296:2: ( 'a' .. 'z' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:296:4: 'a' .. 'z'
             {
             matchRange('a','z'); 
 
@@ -686,8 +705,8 @@ public class SnortFactoryLexer extends Lexer {
     // $ANTLR start "UPPER"
     public final void mUPPER() throws RecognitionException {
         try {
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:242:2: ( 'A' .. 'Z' )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:242:4: 'A' .. 'Z'
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:299:2: ( 'A' .. 'Z' )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:299:4: 'A' .. 'Z'
             {
             matchRange('A','Z'); 
 
@@ -704,10 +723,10 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = WHITESPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:2: ( ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+ )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:4: ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:2: ( ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+ )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:4: ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+
             {
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:4: ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:4: ( '\\t' | ' ' | '\\r' | '\\\\\\n' | '\\u000C' )+
             int cnt3=0;
             loop3:
             do {
@@ -743,28 +762,28 @@ public class SnortFactoryLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:6: '\\t'
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:6: '\\t'
             	    {
             	    match('\t'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:13: ' '
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:13: ' '
             	    {
             	    match(' '); 
 
             	    }
             	    break;
             	case 3 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:19: '\\r'
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:19: '\\r'
             	    {
             	    match('\r'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:26: '\\\\\\n'
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:26: '\\\\\\n'
             	    {
             	    match("\\\n"); 
 
@@ -772,7 +791,7 @@ public class SnortFactoryLexer extends Lexer {
             	    }
             	    break;
             	case 5 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:245:34: '\\u000C'
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:302:34: '\\u000C'
             	    {
             	    match('\f'); 
 
@@ -805,11 +824,11 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = VARNAME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:247:9: ( LETTER ( LETTER | DIGIT | '_' )* )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:247:11: LETTER ( LETTER | DIGIT | '_' )*
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:304:9: ( LETTER ( LETTER | DIGIT | '_' )* )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:304:11: LETTER ( LETTER | DIGIT | '_' )*
             {
             mLETTER(); 
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:247:18: ( LETTER | DIGIT | '_' )*
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:304:18: ( LETTER | DIGIT | '_' )*
             loop4:
             do {
                 int alt4=2;
@@ -858,12 +877,12 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = VARREF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:249:8: ( '$' LETTER ( LETTER | DIGIT | '_' )* )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:249:10: '$' LETTER ( LETTER | DIGIT | '_' )*
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:306:8: ( '$' LETTER ( LETTER | DIGIT | '_' )* )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:306:10: '$' LETTER ( LETTER | DIGIT | '_' )*
             {
             match('$'); 
             mLETTER(); 
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:249:21: ( LETTER | DIGIT | '_' )*
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:306:21: ( LETTER | DIGIT | '_' )*
             loop5:
             do {
                 int alt5=2;
@@ -912,10 +931,10 @@ public class SnortFactoryLexer extends Lexer {
         try {
             int _type = NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:8: ( ( DIGIT )+ )
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:10: ( DIGIT )+
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:308:8: ( ( DIGIT )+ )
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:308:10: ( DIGIT )+
             {
-            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:10: ( DIGIT )+
+            // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:308:10: ( DIGIT )+
             int cnt6=0;
             loop6:
             do {
@@ -929,7 +948,7 @@ public class SnortFactoryLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:251:10: DIGIT
+            	    // src/rsc/backend/modules/ips/backend/parser/SnortFactory.g:308:10: DIGIT
             	    {
             	    mDIGIT(); 
 
@@ -1228,7 +1247,7 @@ public class SnortFactoryLexer extends Lexer {
             this.transition = DFA2_transition;
         }
         public String getDescription() {
-            return "208:1: RULES : ( 'alert' | 'log' | 'pass' | 'activate' | 'dynamic' | 'drop' | 'reject' | 'sdrop' );";
+            return "265:1: RULES : ( 'alert' | 'log' | 'pass' | 'activate' | 'dynamic' | 'drop' | 'reject' | 'sdrop' );";
         }
     }
     static final String DFA7_eotS =
