@@ -1,11 +1,4 @@
 /*
- * Exportable.java
- *
- * Created on January 29, 2007, 12:27 AM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

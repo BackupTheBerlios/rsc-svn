@@ -1,10 +1,4 @@
 /*
- * EmptyPanel.java
- *
- * Created on January 20, 2007, 2:10 PM
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

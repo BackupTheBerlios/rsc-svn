@@ -1,11 +1,4 @@
 /*
- * CollectionListener.java
- *
- * Created on January 26, 2007, 7:45 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

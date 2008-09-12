@@ -1,10 +1,4 @@
 /*
- * Configurator.java
- *
- * Created on September 8, 2008, 7:23 PM
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

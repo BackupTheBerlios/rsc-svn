@@ -1,11 +1,4 @@
 /*
- * Host.java
- *
- * Created on November 1, 2006, 9:03 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).
@@ -71,9 +64,7 @@ public class HostImpl extends DefaultContentPanelProvider implements Host, Conne
     public HostImpl(Element e, DefaultTreeModel dtm) {
         String x = e.getAttributeValue("connection");
         for (ConnectionContainer cc : RSC.getInstance().getConnections()) {
-            //System.out.println("vgl: "+cc.getClassName()+" - "+x);
             if(cc.getClassName().equals(x)) {
-                //System.out.println("uiii");
                 try {
                     connection = cc.newInstance(e);
                 } catch (IllegalArgumentException ex) {

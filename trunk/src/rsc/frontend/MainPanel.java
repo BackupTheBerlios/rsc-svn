@@ -1,11 +1,4 @@
 /*
- * MainPanel.java
- *
- * Created on February 2, 2007, 12:21 AM
- * 
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

@@ -1,11 +1,4 @@
 /*
- * AbstractModul.java
- *
- * Created on January 24, 2007, 11:51 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

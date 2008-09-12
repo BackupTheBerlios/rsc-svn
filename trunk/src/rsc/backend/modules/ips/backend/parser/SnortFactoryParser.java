@@ -1,4 +1,4 @@
-// $ANTLR 3.1 src/rsc/backend/modules/ips/backend/parser/SnortFactory.g 2008-09-12 10:57:36
+// $ANTLR 3.1 src/rsc/backend/modules/ips/backend/parser/SnortFactory.g 2008-09-12 13:26:52
 
 /*
  * Copyright 2008 Marcel Richter

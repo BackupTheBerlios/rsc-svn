@@ -1,11 +1,4 @@
 /*
- * ConnectionContainer.java
- *
- * Created on January 22, 2007, 8:16 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

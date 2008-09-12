@@ -1,11 +1,4 @@
 /*
- * ClassContainer.java
- *
- * Created on January 23, 2007, 9:24 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

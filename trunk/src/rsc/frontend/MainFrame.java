@@ -1,10 +1,4 @@
 /*
- * Frame.java
- *
- * Created on November 1, 2006, 3:34 PM
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).

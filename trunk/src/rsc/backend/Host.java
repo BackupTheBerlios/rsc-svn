@@ -1,11 +1,4 @@
 /*
- * Host.java
- *
- * Created on January 31, 2007, 8:15 PM
- *
- */
-
-/*
  * Copyright 2008 Marcel Richter
  * 
  * This file is part of RSC (Remote Service Configurator).
